@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import * as express from "express";
 import { db } from "../server";
+//@ts-ignore
 import { IRequestBody, IRequestQuery } from "../../types";
 import * as bodyParser from "body-parser";
 

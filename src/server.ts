@@ -1,13 +1,14 @@
 import express, { Application } from "express";
 import mysql from "mysql";
 import * as dotenv from "dotenv";
+import routes from "./routes/FavoriteCity";
+import cors from "cors";
+import router from "./routes/FavoriteCity";
+
 dotenv.config();
 
-import routes from "./routes/FavoriteCity";
-
-var cors = require("cors");
-//@ts-ignore
 const app: Application = express();
+
 export const db = mysql.createConnection({
   user: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWD,
@@ -23,8 +24,6 @@ app.use(
     origin: "*",
   })
 );
-
-app.use("/login", routes);
 
 app.listen(PORT, () => {
   console.log(`działa na portcie ${PORT}`);
@@ -42,4 +41,4 @@ db.connect((err) => {
   }
 });
 
-export default app;
+app.use("/favorite-city", routes);

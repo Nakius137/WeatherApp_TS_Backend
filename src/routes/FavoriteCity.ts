@@ -6,51 +6,44 @@ import { db } from "../server";
 import { IRequestBody, IRequestQuery } from "../../types";
 import * as bodyParser from "body-parser";
 
-//@ts-ignore
 const router = express.Router();
 const jsonParser = bodyParser.json();
-router.use(jsonParser);
 
-router.get(
-  "/login",
-  (req: Request<{}, {}, {}, IRequestQuery>, res: Response) => {
-    let email = req.query.email;
-    let sql = `SELECT * FROM Users WHERE Email='${email}'`;
+router.use(jsonParser, (req, res, next) => {
+  res.send("haaaalooo");
+});
 
-    let query = db.query(sql, (err, result) => {
-      if (err) {
-        res.status(500);
-        res.send(err.message);
-      }
-      res.status(200);
-      res.send(result);
-    });
-  }
-);
+router.get("/", (req: Request<{}, {}, {}, IRequestQuery>, res: Response) => {
+  console.log("/login/");
+  // let email = req.query.email;
+  // let sql = `SELECT * FROM Users WHERE Email='${email}'`;
+  // console.log("halo 1");
+  // let query = db.query(sql, (err, result) => {
+  //   if (err) {
+  //     res.status(500);
+  //     res.send(err.message);
+  //   }
+  //   res.status(200);
+  //   res.send(result);
+  // });
+  res.send("ewrgesge");
+});
 
-router.post("/login", (req: Request<{}, {}, IRequestBody>, res: Response) => {
+router.post("/", (req: Request<{}, {}, IRequestBody>, res: Response) => {
   let email = req.query.email;
-  let FavoriteCityNew = req.body.favoriteCity;
-  let sql = `SELECT Favorite_City from Users WHERE Email ='${email}'`;
+  let FavoriteCity = req.body.favoriteCity;
+  let sql = `INSERT INTO Users values (${email}, ${FavoriteCity}'`;
 
-  // let askQuery = CircularJSON.stringify(
-  //   db.query(sql, (err, result) => {
-  //     if (err) {
-  //       res.status(500);
-  //       res.send(err.message);
-  //     }
-  //     res.status(200);
-  //     res.send(result);
-  //   })
-  // );
+  console.log("halo 2");
 
-  console.log(FavoriteCityNew);
-
-  // let FullFavoriteCity = `${askQuery}, ${TrimedFavoriteCityNew}`;
-
-  // let FavoriteCityQuery = `UPDATE Users SET Favorite_City = ${FullFavoriteCity} WHERE Email='${email}'`;
-
-  // console.log(FavoriteCityQuery);
+  let query = db.query(sql, (err, result) => {
+    if (err) {
+      res.status(500);
+      res.send(err.message);
+    }
+    res.status(200);
+    res.send(result);
+  });
 });
 
 export default router;

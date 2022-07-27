@@ -5,6 +5,7 @@ export interface UserInterface {
 
 export interface IRequestBody {
   favoriteCity: string;
+  email: string;
 }
 export interface IRequestQuery {
   email: string;

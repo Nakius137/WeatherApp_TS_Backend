@@ -1,3 +1,4 @@
+import AuthPatternFC from '@/shared/AuthPattern';
 import { IRequestBody, IRequestQuery } from '@/types/types';
 import express, { Request, Response } from 'express';
 import { db } from "../database/db";
@@ -6,6 +7,8 @@ const router = express.Router();
 
 router.get('/', (req: Request<{}, {}, {}, IRequestQuery>, res: Response) => {
   let email = req.query.email;
+
+  AuthPatternFC(email)
 
   let sql = `SELECT * FROM Users WHERE Email='${email}'`;
 
@@ -24,6 +27,8 @@ router.post("/", (req: Request<{}, {}, IRequestBody>, res: Response) => {
   let email = req.body.email;
   let favoriteCity = req.body.favoriteCity;
   
+  AuthPatternFC(email, favoriteCity)
+  
   let sql = `INSERT INTO Users values ('${email}', '${favoriteCity}')`;
 
   let query = db.query(sql, (err, result) => {
@@ -39,6 +44,8 @@ router.post("/", (req: Request<{}, {}, IRequestBody>, res: Response) => {
 router.delete("/", (req: Request<{}, {}, IRequestBody>, res: Response) => {
   let email = req.body.email
   let favoriteCity = req.body.favoriteCity
+
+  AuthPatternFC(email,favoriteCity)
 
   let sql = `DELETE FROM Users WHERE email='${email}' AND favoriteCity='${favoriteCity}' `;
   

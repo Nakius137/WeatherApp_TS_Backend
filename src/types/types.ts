@@ -1,3 +1,5 @@
+import { type } from "os";
+
 export interface UserInterface {
   userName: string;
   password: string;
@@ -13,3 +15,5 @@ export interface IRequestQuery {
 export interface IResponseBody {
   result: string;
 }
+
+export type AuthFC = (email?: string, favcity?: string) => void

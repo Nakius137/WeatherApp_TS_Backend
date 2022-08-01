@@ -16,4 +16,3 @@ export interface IResponseBody {
   result: string;
 }
 
-export type AuthFC = (email?: string, favcity?: string) => void

@@ -1,5 +1,4 @@
 import express, { Application } from 'express';
-
 import routes from './routes/favcity';
 import cors from 'cors';
 
@@ -18,5 +17,6 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`działa na portcie ${PORT}`);
 });
+
 
 

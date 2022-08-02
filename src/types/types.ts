@@ -1,4 +1,3 @@
-import { type } from "os";
 
 export interface UserInterface {
   userName: string;
@@ -7,12 +6,15 @@ export interface UserInterface {
 
 export interface IRequestBody {
   favoriteCity: string;
-  email: string;
+  verifiedUsername: string;
 }
 export interface IRequestQuery {
-  email: string;
+  verifiedUsername: string;
 }
 export interface IResponseBody {
   result: string;
 }
 
+export interface decodedToken {
+  username: string
+}

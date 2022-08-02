@@ -1,58 +1,15 @@
-import { IRequestBody, IRequestQuery } from '@/types/types';
-import express, { Request, Response } from 'express';
-import { db } from "../database/db";
+import deleteData from '@/middlewares/deleteData';
+import insertInto from '@/middlewares/insertData';
+import select from '@/middlewares/selectData';
+import auth from '@/middlewares/auth'
+import express from 'express';
 
 const router = express.Router();
 
-router.get('/', (req: Request<{}, {}, {}, IRequestQuery>, res: Response) => {
-  let email = req.query.email;
+router.get('/', auth, select);
 
-  let sql = `SELECT * FROM Users WHERE Email='${db.escape(email)}'`;
+router.post("/", auth, insertInto);
 
-  let query = db.query(sql, (err, result) => {
-    if (err) {
-      res.status(500);
-      res.send(err.message);
-    }
-    res.status(200);
-    res.send(result);
-  });
-
-});
-
-router.post("/", (req: Request<{}, {}, IRequestBody>, res: Response) => {
-  let email = req.body.email;
-  let favoriteCity = req.body.favoriteCity;
-  
-
-  
-  let sql = `INSERT INTO Users values ('${db.escape(email)}', '${db.escape(favoriteCity)}')`;
-
-  let query = db.query(sql, (err, result) => {
-    if (err) {
-      res.status(500);
-      res.send(err.message);
-    }
-    res.status(200);
-    res.send(result);
-  });
-});
-
-router.delete("/", (req: Request<{}, {}, IRequestBody>, res: Response) => {
-  let email = req.body.email
-  let favoriteCity = req.body.favoriteCity
-
-
-  let sql = `DELETE FROM Users WHERE email='${db.escape(email)}' AND favoriteCity='${db.escape(favoriteCity)}' `;
-  
-  let query = db.query(sql, (err, result) => {
-    if (err) {
-      res.status(500);
-      res.send(err.message);
-    }
-    res.status(200);
-    res.send(result);
-  });
-})
+router.delete("/", auth, deleteData);
 
 export default router;
